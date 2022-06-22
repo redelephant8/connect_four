@@ -30,7 +30,7 @@ class Board
     end
   end
 
-  def row_free?(game_board, column)
+  def row_free?(column, game_board)
     game_board.each do |row|
       return true if row[column - 1] == '⚪'
     end

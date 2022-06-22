@@ -39,17 +39,16 @@ class Game
     loop do
       input = gets.chomp
       if input.match?(/^\d+$/)
-        verified = verify_input(input.to_i, @board.game_board, @board)
+        verified = verify_input(input.to_i, @board)
       end
       return input.to_i if verified
-
-      puts 'Please enter a number between 1 and 7'
+      puts 'Error! Please enter a number between 1 and 7 for a column not yet full'
     end
   end
 
-  def verify_input(input, board, game)
+  def verify_input(input, board)
     if input.between?(1, 7)
-      if game.row_free?(board, input)
+      if board.row_free?(input, board.game_board)
         return true
       end
     end

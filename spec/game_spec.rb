@@ -27,13 +27,15 @@ describe Game do
     subject(:game_mid) { described_class.new }
 
     it 'returns true when player inputs 5' do
+      board = game_mid.instance_variable_get(:@board)
       column = 5
-      expect(game_mid.verify_input(column, game_mid.board.board, game_mid)).to eq(true)
+      expect(game_mid.verify_input(column, board)).to eq(true)
     end
 
     it 'returns true when player inputs 7' do
+      board = game_mid.instance_variable_get(:@board)
       column = 7
-      expect(game_mid.verify_input(column, game_mid)).to eq(true)
+      expect(game_mid.verify_input(column, board)).to eq(true)
     end
 
     it 'returns false when player inputs 8' do
@@ -59,7 +61,7 @@ describe Game do
 
       it 'stops loop and does not show error message' do
         player1 = game_mid.instance_variable_get(:@player1)
-        error_message = 'Please enter a number between 1 and 7'
+        error_message = 'Error! Please enter a number between 1 and 7 for a column not yet full'
         expect(game_mid).not_to receive(:puts).with(error_message)
         game_mid.player_input(player1)
       end
@@ -75,7 +77,9 @@ describe Game do
 
       it 'shows error message twice and stops loop' do
         player1 = game_mid.instance_variable_get(:@player1)
-        error_message = 'Please enter a number between 1 and 7'
+        original_message = ', please enter a number between 1 and 7: '
+        error_message = 'Error! Please enter a number between 1 and 7 for a column not yet full'
+        expect(game_mid).to receive(:puts).with(original_message).once
         expect(game_mid).to receive(:puts).with(error_message).twice
         game_mid.player_input(player1)
       end
